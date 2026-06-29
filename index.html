@@ -14,9 +14,9 @@
             --bg-card-hover: #222222;
             --red: #ff3333;
             --red-glow: #ff333380;
-            --gold: #ffcc00;
-            --gold-glow: #ffcc0066;
-            --white: #f0f0f0;
+            --white: #ffffff;
+            --white-glow: #ffffff66;
+            --text-primary: #ffffff;
             --text-secondary: #b0b0b0;
             --border-subtle: #2a2a2a;
             --radius: 16px;
@@ -38,12 +38,136 @@
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: var(--bg-dark);
-            color: var(--white);
+            color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             min-height: 100vh;
+            cursor: none;
+        }
+
+        /* ========== ПРЕЛОАДЕР ========== */
+        .preloader {
+            position: fixed;
+            inset: 0;
+            background: #0a0a0a;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .preloader-logo {
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--red);
+            text-shadow: 0 0 40px var(--red-glow);
+            animation: preloaderPulse 1.2s ease-in-out infinite;
+        }
+        .preloader-logo span {
+            color: var(--white);
+            text-shadow: 0 0 40px rgba(255,255,255,0.5);
+        }
+        @keyframes preloaderPulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+        .preloader-spinner {
+            margin-top: 20px;
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: var(--red);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ========== ИСКРЫ ПРИ КЛИКЕ ========== */
+        .click-spark {
+            position: fixed;
+            pointer-events: none;
+            z-index: 99998;
+            width: 6px;
+            height: 6px;
+            background: var(--white);
+            border-radius: 50%;
+            box-shadow: 0 0 12px rgba(255,255,255,0.8);
+            animation: sparkFly 0.7s ease-out forwards;
+        }
+        @keyframes sparkFly {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
+        }
+
+        /* ============ Кастомный неоновый курсор ============ */
+        .neon-cursor {
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,51,51,0.9) 0%, rgba(255,255,255,0.8) 70%, transparent 100%);
+            box-shadow: 0 0 20px var(--red-glow), 0 0 40px rgba(255,255,255,0.6), 0 0 60px rgba(255,51,51,0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.15s ease, height 0.15s ease, background 0.15s ease;
+            animation: cursorPulse 2s ease-in-out infinite;
+        }
+        .neon-cursor.active {
+            width: 16px;
+            height: 16px;
+            background: var(--white);
+            box-shadow: 0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(255,255,255,0.6);
+        }
+        @keyframes cursorPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.3); }
+        }
+
+        /* ============ Неоновый разделитель ============ */
+        .neon-divider {
+            width: 100%;
+            max-width: 800px;
+            margin: 60px auto;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--red), var(--white), var(--red), transparent);
+            background-size: 200% 100%;
+            border-radius: 2px;
+            animation: moveLight 3s linear infinite;
+            position: relative;
+            box-shadow: 0 0 20px var(--red-glow), 0 0 40px rgba(255,255,255,0.5);
+        }
+        .neon-divider::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 0;
+            width: 60px;
+            height: 7px;
+            background: #fff;
+            border-radius: 4px;
+            filter: blur(3px);
+            animation: runDot 3s linear infinite;
+        }
+        @keyframes moveLight {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        @keyframes runDot {
+            0% { left: 0; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { left: 100%; opacity: 0; }
         }
 
         /* ============ Фоновые частицы ============ */
@@ -115,7 +239,10 @@
             gap: 10px;
         }
         .toast.success {
-            box-shadow: 0 8px 32px rgba(255, 204, 0, 0.5), 0 0 0 2px rgba(255, 204, 0, 0.6);
+            box-shadow: 0 8px 32px rgba(255, 255, 255, 0.3), 0 0 0 2px rgba(255, 255, 255, 0.5);
+        }
+        .toast.error {
+            box-shadow: 0 8px 32px rgba(255, 51, 51, 0.6), 0 0 0 2px rgba(255, 51, 51, 0.6);
         }
         .toast .toast-icon {
             font-size: 1.3rem;
@@ -219,10 +346,10 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--gold);
+            background: var(--white);
             border-radius: 2px;
             transition: width 0.3s ease;
-            box-shadow: 0 0 10px var(--gold-glow);
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
         }
         .nav-link:hover {
             color: #fff;
@@ -230,41 +357,82 @@
         .nav-link:hover::after {
             width: 100%;
         }
-        .btn-copy-ip {
-            background: transparent;
-            border: 2px solid var(--gold);
-            color: var(--gold);
-            padding: 10px 18px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
-            transition: var(--transition);
-            white-space: nowrap;
-            font-family: 'Montserrat', sans-serif;
+
+        /* Блок IP + Онлайн в шапке */
+        .header-ip-online {
             display: flex;
             align-items: center;
-            gap: 7px;
-            position: relative;
-            overflow: hidden;
+            gap: 14px;
+            background: rgba(26, 26, 26, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--white);
+            border-radius: 60px;
+            padding: 6px 8px 6px 18px;
+            box-shadow: 0 0 16px rgba(255,255,255,0.2), inset 0 0 14px rgba(255,255,255,0.08);
+            transition: all 0.35s ease;
+            white-space: nowrap;
+            font-size: 0.88rem;
+            font-weight: 600;
         }
-        .btn-copy-ip:hover {
-            background: var(--gold);
+        .header-ip-online:hover {
+            box-shadow: 0 0 32px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.2), inset 0 0 20px rgba(255,255,255,0.15);
+            border-color: var(--white);
+            transform: translateY(-1px);
+        }
+
+        .online-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ccc;
+        }
+        .online-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #4caf50;
+            box-shadow: 0 0 12px #4caf50;
+            animation: dotPulse 1.4s ease-in-out infinite;
+        }
+        .online-text {
+            letter-spacing: 0.3px;
+            font-size: 0.82rem;
+        }
+
+        .ip-address {
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.4px;
+            user-select: all;
+            padding: 0 4px;
+            border-right: 1px solid rgba(255,255,255,0.25);
+            border-left: 1px solid rgba(255,255,255,0.25);
+        }
+
+        .btn-copy-new-ip {
+            background: var(--white);
+            border: none;
             color: #000;
-            box-shadow: 0 0 30px var(--gold-glow), 0 0 60px var(--gold-glow), 0 0 90px rgba(255, 204, 0, 0.25);
-            transform: translateY(-2px);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 14px rgba(255,255,255,0.5);
+            flex-shrink: 0;
         }
-        .btn-copy-ip:active {
+        .btn-copy-new-ip:hover {
+            background: #f0f0f0;
+            box-shadow: 0 0 28px rgba(255,255,255,0.7), 0 0 50px rgba(255,255,255,0.4);
+            transform: scale(1.08);
+        }
+        .btn-copy-new-ip:active {
             transform: scale(0.94);
-            transition: transform 0.1s ease;
-        }
-        .btn-copy-ip .copy-icon {
-            font-size: 1rem;
-            transition: transform 0.3s ease;
-        }
-        .btn-copy-ip:hover .copy-icon {
-            transform: rotate(10deg) scale(1.1);
         }
 
         /* Бургер-меню */
@@ -272,7 +440,6 @@
             display: none;
             flex-direction: column;
             gap: 5px;
-            cursor: pointer;
             z-index: 1100;
             background: transparent;
             border: none;
@@ -330,9 +497,20 @@
             font-size: 1.4rem;
             color: #fff;
         }
-        .mobile-nav .btn-copy-ip {
-            font-size: 1.1rem;
-            padding: 12px 28px;
+        .mobile-nav .header-ip-online {
+            flex-direction: column;
+            gap: 10px;
+            padding: 14px 20px;
+            border-radius: 30px;
+        }
+        .mobile-nav .ip-address {
+            border: none;
+            font-size: 1rem;
+        }
+        .mobile-nav .btn-copy-new-ip {
+            width: auto;
+            padding: 10px 20px;
+            border-radius: 30px;
         }
         .mobile-nav-close {
             position: absolute;
@@ -342,7 +520,6 @@
             background: none;
             border: none;
             color: #fff;
-            cursor: pointer;
             transition: var(--transition);
             width: 50px;
             height: 50px;
@@ -370,6 +547,17 @@
             text-align: center;
             padding: 40px 24px;
             position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        .hero-bg-layer {
+            position: absolute;
+            inset: -20%;
+            background: radial-gradient(circle at 50% 50%, rgba(255,51,51,0.05) 0%, transparent 70%);
+            pointer-events: none;
+            transition: transform 0.1s ease-out;
+            will-change: transform;
         }
         .hero::before {
             content: '';
@@ -383,6 +571,7 @@
             border-radius: 50%;
             pointer-events: none;
             animation: heroGlow 4s ease-in-out infinite;
+            z-index: 0;
         }
         @keyframes heroGlow {
             0%,
@@ -400,6 +589,7 @@
             z-index: 2;
             max-width: 800px;
             animation: fadeInUp 0.8s ease-out;
+            transform-style: preserve-3d;
         }
         @keyframes fadeInUp {
             from {
@@ -418,24 +608,29 @@
             margin-bottom: 16px;
             line-height: 1.2;
             text-transform: uppercase;
+            position: relative;
+            z-index: 2;
         }
         .hero-title .highlight-red {
             color: var(--red);
             text-shadow: 0 0 30px var(--red-glow), 0 0 60px var(--red-glow), 0 0 100px rgba(255, 51, 51, 0.4);
         }
-        .hero-title .highlight-gold {
-            color: var(--gold);
-            text-shadow: 0 0 30px var(--gold-glow), 0 0 60px var(--gold-glow);
+        .hero-title .highlight-white {
+            color: var(--white);
+            text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(255,255,255,0.6);
         }
         .hero-subtitle {
             font-size: 1.2rem;
             color: var(--text-secondary);
-            margin-bottom: 40px;
+            margin-bottom: 20px;
             max-width: 620px;
             margin-left: auto;
             margin-right: auto;
             font-weight: 500;
             line-height: 1.7;
+            position: relative;
+            z-index: 2;
+            min-height: 3.5em;
         }
         .hero-buttons {
             display: flex;
@@ -443,7 +638,45 @@
             justify-content: center;
             gap: 20px;
             flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 30px;
         }
+
+        /* Таймер обратного отсчёта */
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+            position: relative;
+            z-index: 2;
+        }
+        .timer-item {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid var(--red);
+            border-radius: 16px;
+            padding: 12px 18px;
+            text-align: center;
+            min-width: 70px;
+            box-shadow: 0 0 15px var(--red-glow);
+            backdrop-filter: blur(5px);
+        }
+        .timer-value {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--white);
+            text-shadow: 0 0 20px rgba(255,255,255,0.8);
+            line-height: 1;
+        }
+        .timer-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #ccc;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
         .btn-primary {
             background: var(--red);
             color: #fff;
@@ -453,7 +686,6 @@
             font-weight: 700;
             font-size: 1.05rem;
             letter-spacing: 0.6px;
-            cursor: pointer;
             text-decoration: none;
             transition: var(--transition);
             box-shadow: 0 6px 25px rgba(255, 51, 51, 0.45);
@@ -485,7 +717,6 @@
             border: 2px solid #333;
             border-radius: 50px;
             padding: 14px 28px;
-            cursor: pointer;
             transition: var(--transition);
             display: inline-flex;
             align-items: center;
@@ -498,8 +729,8 @@
             font-size: 1rem;
         }
         .ip-plate:hover {
-            border-color: var(--gold);
-            box-shadow: 0 0 30px var(--gold-glow), 0 0 50px rgba(255, 204, 0, 0.2);
+            border-color: var(--white);
+            box-shadow: 0 0 30px rgba(255,255,255,0.3), 0 0 50px rgba(255,255,255,0.2);
             color: #fff;
             background: #222;
             transform: translateY(-2px);
@@ -531,7 +762,42 @@
             flex-shrink: 0;
         }
         .ip-plate:hover .copy-hint {
-            color: var(--gold);
+            color: var(--white);
+        }
+
+        /* Кнопка "Наверх" */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(26, 26, 26, 0.8);
+            border: 2px solid var(--white);
+            color: var(--white);
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 9990;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255,255,255,0.4);
+            backdrop-filter: blur(10px);
+        }
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .scroll-to-top:hover {
+            background: var(--white);
+            color: #000;
+            box-shadow: 0 0 30px rgba(255,255,255,0.7);
         }
 
         /* ============ СЕКЦИЯ ДОНАТА ============ */
@@ -551,8 +817,8 @@
             text-transform: uppercase;
         }
         .section-title .accent {
-            color: var(--gold);
-            text-shadow: 0 0 30px var(--gold-glow);
+            color: var(--white);
+            text-shadow: 0 0 30px rgba(255,255,255,0.6);
         }
         .section-subtitle {
             text-align: center;
@@ -618,8 +884,8 @@
             font-size: 1.6rem;
             font-weight: 900;
             margin-bottom: 16px;
-            color: var(--card-accent, var(--gold));
-            text-shadow: 0 0 15px var(--card-accent-glow, rgba(255,204,0,0.5));
+            color: var(--card-accent, var(--red));
+            text-shadow: 0 0 15px var(--card-accent-glow, rgba(255,51,51,0.5));
         }
         .card-features {
             list-style: none;
@@ -655,7 +921,6 @@
             letter-spacing: 0.5px;
             transition: var(--transition);
             border: none;
-            cursor: pointer;
             box-shadow: 0 4px 18px var(--card-accent-glow, rgba(255,51,51,0.4));
             font-family: 'Montserrat', sans-serif;
             margin-top: auto;
@@ -699,28 +964,149 @@
             flex-wrap: wrap;
             justify-content: center;
         }
-        .social-link {
-            color: #aaa;
-            text-decoration: none;
-            font-weight: 600;
+
+        /* Неоновые кнопки соцсетей (красно-белые) */
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 700;
             font-size: 0.95rem;
-            transition: var(--transition);
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid var(--white);
+            position: relative;
+            overflow: hidden;
+            color: var(--white);
+            background: rgba(30, 30, 30, 0.7);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 14px rgba(255,255,255,0.2);
+            font-family: 'Montserrat', sans-serif;
+        }
+        .social-btn .social-icon {
+            font-size: 1.3rem;
+            transition: transform 0.3s ease;
+        }
+        .social-btn:hover {
+            background: var(--white);
+            border-color: var(--white);
+            color: #000;
+            box-shadow: 0 0 32px rgba(255,255,255,0.7), 0 0 60px rgba(255,255,255,0.4);
+            transform: translateY(-3px);
+        }
+        .social-btn:hover .social-icon {
+            transform: rotate(10deg) scale(1.15);
+        }
+
+        /* ========== МОДАЛЬНОЕ ОКНО ДОНАТА ========== */
+        .donate-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
-            border-radius: 30px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid transparent;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
-        .social-link:hover {
+        .donate-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .donate-modal {
+            background: var(--bg-card);
+            border: 2px solid var(--red);
+            border-radius: 24px;
+            padding: 36px 32px;
+            max-width: 440px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 50px var(--red-glow), 0 20px 50px rgba(0, 0, 0, 0.7);
+            animation: modalSlideIn 0.4s ease-out;
+        }
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 2rem;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+        .modal-close:hover {
+            color: var(--red);
+        }
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
             color: #fff;
-            border-color: #444;
-            background: rgba(255,255,255,0.06);
-            box-shadow: 0 0 20px rgba(255,255,255,0.05);
+            text-transform: uppercase;
         }
-        .social-link .social-icon {
-            font-size: 1.2rem;
+        .modal-subtitle {
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 24px;
+            font-size: 0.95rem;
+        }
+        .modal-input {
+            width: 100%;
+            padding: 14px 20px;
+            background: #121212;
+            border: 2px solid #333;
+            border-radius: 60px;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.4px;
+            margin-bottom: 24px;
+        }
+        .modal-input:focus {
+            border-color: var(--white);
+            box-shadow: 0 0 20px rgba(255,255,255,0.3), 0 0 30px rgba(255,255,255,0.2);
+        }
+        .modal-btn {
+            background: var(--red);
+            color: #fff;
+            border: none;
+            padding: 15px 36px;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1.05rem;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            box-shadow: 0 8px 28px rgba(255, 51, 51, 0.5);
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            width: 100%;
+        }
+        .modal-btn:hover {
+            background: #ff5050;
+            box-shadow: 0 12px 36px rgba(255, 51, 51, 0.7), 0 0 60px rgba(255, 51, 51, 0.4);
+            transform: translateY(-2px);
         }
 
         /* ============ АДАПТИВНОСТЬ ============ */
@@ -741,17 +1127,29 @@
             .ip-plate { font-size: 0.85rem; padding: 12px 20px; }
             .btn-primary { padding: 14px 28px; font-size: 0.95rem; }
             .shop-section { padding: 50px 16px 70px; }
+            .countdown-timer { gap: 10px; }
+            .timer-item { padding: 10px 14px; min-width: 60px; }
+            .timer-value { font-size: 1.5rem; }
         }
         @media (max-width: 480px) {
             .hero-title { font-size: 1.7rem; }
             .section-title { font-size: 1.5rem; }
             .cards-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
             .ip-plate { font-size: 0.75rem; padding: 10px 16px; }
-            .btn-copy-ip { padding: 8px 14px; font-size: 0.8rem; }
+            .countdown-timer { flex-wrap: wrap; justify-content: center; }
         }
     </style>
 </head>
 <body>
+
+    <!-- ПРЕЛОАДЕР -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-logo">💀 TRON<span>CRAFT</span></div>
+        <div class="preloader-spinner"></div>
+    </div>
+
+    <!-- Кастомный неоновый курсор -->
+    <div class="neon-cursor" id="neonCursor"></div>
 
     <!-- Фоновые частицы -->
     <div class="bg-particles" id="particles"></div>
@@ -768,10 +1166,19 @@
             <nav class="nav" id="desktopNav">
                 <a href="#hero" class="nav-link">Главная</a>
                 <a href="#shop" class="nav-link">Донат</a>
+                <a href="#cases" class="nav-link">Кейсы</a>
                 <a href="#rules" class="nav-link">Правила</a>
-                <button class="btn-copy-ip" onclick="copyIP()" aria-label="Скопировать IP сервера">
-                    <span class="copy-icon">📋</span> Копировать IP
-                </button>
+                <!-- Блок IP + Онлайн -->
+                <div class="header-ip-online">
+                    <div class="online-badge">
+                        <span class="online-dot"></span>
+                        <span class="online-text">Онлайн: 42/150</span>
+                    </div>
+                    <span class="ip-address">d1.proxify.cloud:25034</span>
+                    <button class="btn-copy-new-ip" onclick="copyNewIP()" aria-label="Скопировать IP сервера">
+                        <span>📋</span>
+                    </button>
+                </div>
             </nav>
             <button class="burger" id="burgerBtn" aria-label="Меню">
                 <span></span><span></span><span></span>
@@ -784,8 +1191,16 @@
         <button class="mobile-nav-close" id="mobileNavClose" aria-label="Закрыть меню">✕</button>
         <a href="#hero" class="nav-link" onclick="closeMobileNav()">Главная</a>
         <a href="#shop" class="nav-link" onclick="closeMobileNav()">Донат</a>
+        <a href="#cases" class="nav-link" onclick="closeMobileNav()">Кейсы</a>
         <a href="#rules" class="nav-link" onclick="closeMobileNav()">Правила</a>
-        <button class="btn-copy-ip" onclick="copyIP(); closeMobileNav();">📋 Копировать IP</button>
+        <div class="header-ip-online">
+            <div class="online-badge">
+                <span class="online-dot"></span>
+                <span class="online-text">Онлайн: 42/150</span>
+            </div>
+            <span class="ip-address">d1.proxify.cloud:25034</span>
+            <button class="btn-copy-new-ip" onclick="copyNewIP(); closeMobileNav();">📋 Копировать</button>
+        </div>
     </div>
 
     <!-- ОСНОВНОЙ КОНТЕНТ -->
@@ -793,32 +1208,54 @@
 
         <!-- HERO SECTION -->
         <section class="hero" id="hero">
-            <div class="hero-content">
+            <div class="hero-bg-layer" id="heroBgLayer"></div>
+            <div class="hero-content" id="heroContent">
                 <h1 class="hero-title">
-                    <span class="highlight-red">TRONCRAFT</span> —<br>Лучший <span class="highlight-gold">гриферский</span> сервер!
+                    <span class="highlight-red">TRONCRAFT</span> —<br>Лучший <span class="highlight-white">гриферский</span> сервер!
                 </h1>
-                <p class="hero-subtitle">
-                    Уникальные мистические аирдропы, честное ПВП без правил, кастомные талисманы и булавы ждут тебя!
-                </p>
+                <p class="hero-subtitle" id="heroSubtitle"></p>
+                <!-- Таймер обратного отсчёта -->
+                <div class="countdown-timer" id="countdownTimer">
+                    <div class="timer-item"><div class="timer-value" id="timerDays">00</div><div class="timer-label">дней</div></div>
+                    <div class="timer-item"><div class="timer-value" id="timerHours">00</div><div class="timer-label">часов</div></div>
+                    <div class="timer-item"><div class="timer-value" id="timerMinutes">00</div><div class="timer-label">минут</div></div>
+                    <div class="timer-item"><div class="timer-value" id="timerSeconds">00</div><div class="timer-label">секунд</div></div>
+                </div>
                 <div class="hero-buttons">
                     <a href="#shop" class="btn-primary">
                         ⚡ Начать играть <span class="btn-arrow">↓</span>
                     </a>
-                    <div class="ip-plate" onclick="copyIP()" title="Нажми, чтобы скопировать IP">
+                    <div class="ip-plate" onclick="copyNewIP()" title="Нажми, чтобы скопировать IP">
                         <span class="ip-dot"></span>
-                        <span>free.cloudblaze.org:20513</span>
+                        <span>d1.proxify.cloud:25034</span>
                         <span class="copy-hint">(копировать)</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- СЕКЦИЯ ДОНАТА (обновлённый Premium) -->
+        <!-- Неоновый разделитель -->
+        <div class="neon-divider"></div>
+
+        <!-- СЕКЦИЯ ДОНАТА -->
         <section class="shop-section" id="shop">
             <h2 class="section-title">Магазин <span class="accent">привилегий</span></h2>
             <p class="section-subtitle">Твой путь к господству начинается здесь</p>
             <div class="cards-grid" id="donateCards"></div>
         </section>
+
+        <!-- Неоновый разделитель -->
+        <div class="neon-divider"></div>
+
+        <!-- СЕКЦИЯ КЕЙСОВ -->
+        <section class="shop-section" id="cases">
+            <h2 class="section-title">Кейсы <span class="accent">и ключи</span></h2>
+            <p class="section-subtitle">Открой уникальные предметы и ресурсы</p>
+            <div class="cards-grid" id="casesCards"></div>
+        </section>
+
+        <!-- Неоновый разделитель -->
+        <div class="neon-divider"></div>
 
         <!-- СЕКЦИЯ ПРАВИЛ -->
         <section id="rules" style="padding: 60px 24px; max-width: 800px; margin: 0 auto; text-align: center; position: relative; z-index: 2;">
@@ -826,7 +1263,7 @@
             <div style="background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: var(--radius); padding: 32px 24px; text-align: left; color: #ccc; line-height: 1.8;">
                 <p style="margin-bottom: 12px; font-weight: 700; color: #fff; font-size: 1.1rem;">👋 Добро пожаловать на TronCraft!</p>
                 <p style="margin-bottom: 16px;">Мы — уникальный и технологичный гриферский проект на версии 1.21.11, созданный игроками для игроков. Если ты ищешь место с честным ПВП, крутой атмосферой и безграничными возможностями для разрушения и созидания — ты попал по адресу!</p>
-                <p style="margin-top: 20px; font-weight: 700; color: var(--gold);">🔥 Почему тебе стоит играть именно на TronCraft:</p>
+                <p style="margin-top: 20px; font-weight: 700; color: var(--white);">🔥 Почему тебе стоит играть именно на TronCraft:</p>
                 <p style="margin: 10px 0 6px;"><strong>⚔️ Бескомпромиссный гриф и ПВП:</strong> Сражайся, взрывай базы и ищи чужие тайники. Наш сервер отлично оптимизирован на ядре Paper для максимально плавной игры.</p>
                 <p style="margin: 10px 0 6px;"><strong>🖥️ Важная деталь:</strong> Проект работает на личном ПК владельца (Xeon E5 2690 v2 / 16 GB RAM / GTX 1070). Мы постоянно работаем над оптимизацией, но если при высоком онлайне возникнут небольшие просадки — мы сделаем всё, чтобы оперативно их исправить!</p>
                 <p style="margin: 10px 0 6px;"><strong>🎁 Кастомные предметы и плагины:</strong> Забудь про скучное выживание. У нас установлены уникальные плагины на гриферские гаджеты и редкие предметы (по типу кастомных тотемов и шаров), которые перевернут твое представление о гриф-режиме!</p>
@@ -844,21 +1281,67 @@
         <div class="footer-inner">
             <p class="footer-copy">© 2026 TRONCRAFT. Все права защищены.</p>
             <div class="footer-socials">
-                <a href="https://vk.com" target="_blank" rel="noopener noreferrer" class="social-link">
+                <a href="https://discord.com/channels/1482763506137960508/1482763508029456385" class="social-btn" target="_blank" rel="noopener noreferrer">
+                    <span class="social-icon">💬</span> Discord
+                </a>
+                <a href="https://vk.me/join/ClCF27FXzUmYZuQi7KFghuPOPn0fJ/e1viY=" class="social-btn" target="_blank" rel="noopener noreferrer">
                     <span class="social-icon">📘</span> ВКонтакте
                 </a>
-                <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="social-link">
-                    <span class="social-icon">💬</span> Discord
+                <a href="https://t.me/troncraftserver" class="social-btn" target="_blank" rel="noopener noreferrer">
+                    <span class="social-icon">✈️</span> Telegram
+                </a>
+                <a href="https://max.ru/join/P0nm-_DOqXcfjjRRQr3cGsde0kf2aJv5ZUnSUvGr6Es" class="social-btn" target="_blank" rel="noopener noreferrer">
+                    <span class="social-icon">📱</span> MAX
                 </a>
             </div>
         </div>
     </footer>
 
+    <!-- МОДАЛЬНОЕ ОКНО ДОНАТА -->
+    <div class="donate-modal-overlay" id="donateModalOverlay">
+        <div class="donate-modal">
+            <button class="modal-close" id="donateModalClose">&times;</button>
+            <h3 class="modal-title">🎁 Покупка доната</h3>
+            <p class="modal-subtitle">Укажи свой никнейм в Minecraft</p>
+            <input type="text" class="modal-input" id="donateNickname" placeholder="Например: TronMaster" autocomplete="off">
+            <button class="modal-btn" id="donateProceedBtn">Перейти к оплате</button>
+        </div>
+    </div>
+
+    <!-- КНОПКА НАВЕРХ -->
+    <button class="scroll-to-top" id="scrollToTopBtn" aria-label="Наверх">↑</button>
+
     <script>
+        // ============ ПРЕЛОАДЕР ============
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.classList.add('hidden');
+            }, 1200);
+        });
+
+        // ============ ИСКРЫ ПРИ КЛИКЕ ============
+        document.addEventListener('click', (e) => {
+            for (let i = 0; i < 8; i++) {
+                const spark = document.createElement('div');
+                spark.classList.add('click-spark');
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 20 + Math.random() * 30;
+                const dx = Math.cos(angle) * distance;
+                const dy = Math.sin(angle) * distance;
+                spark.style.left = e.clientX + 'px';
+                spark.style.top = e.clientY + 'px';
+                spark.style.setProperty('--dx', dx + 'px');
+                spark.style.setProperty('--dy', dy + 'px');
+                document.body.appendChild(spark);
+                spark.addEventListener('animationend', () => spark.remove());
+            }
+        });
+
         // ============ ЧАСТИЦЫ ФОНА ============
         (function createParticles() {
             const container = document.getElementById('particles');
-            const colors = ['#ff3333', '#ffcc00', '#ff5555', '#ffdd44', '#ff6666', '#ffaa00'];
+            const colors = ['#ff3333', '#ffffff', '#ff5555', '#ffffff', '#ff6666', '#ffffff'];
             const particleCount = 35;
 
             for (let i = 0; i < particleCount; i++) {
@@ -876,84 +1359,20 @@
             }
         })();
 
-        // ============ ДАННЫЕ ДОНАТА (Premium с /repair) ============
+        // ============ ДАННЫЕ ДОНАТА (компактное описание) ============
         const donateData = [
-            {
-                id: 'vip',
-                name: 'VIP',
-                accent: '#4caf50',
-                glow: 'rgba(76,175,80,0.6)',
-                icon: '💎',
-                price: '100 ₽',
-                features: ['Доступ к /kit vip', 'Зелёный префикс [VIP]', '5 домов', 'Цветной ник']
-            },
-            {
-                id: 'vip+',
-                name: 'VIP+',
-                accent: '#2e7d32',
-                glow: 'rgba(46,125,50,0.6)',
-                icon: '🔷',
-                price: '200 ₽',
-                features: ['/kit vip+', 'Тёмно-зелёный префикс [VIP+]', '10 домов', 'Улучшенный набор']
-            },
-            {
-                id: 'premium',
-                name: 'Premium',
-                accent: '#03a9f4',
-                glow: 'rgba(3,169,244,0.6)',
-                icon: '💠',
-                price: '300 ₽',
-                features: ['/kit premium', 'Голубой префикс [Premium]', '15 домов', '/repair all раз в 10 минут']
-            },
-            {
-                id: 'deluxe',
-                name: 'Deluxe',
-                accent: '#6a1b9a',
-                glow: 'rgba(106,27,154,0.6)',
-                icon: '🔮',
-                price: '400 ₽',
-                features: ['/kit deluxe', 'Фиолетовый префикс [Deluxe]', '20 домов', '/heal раз в 5 минут']
-            },
-            {
-                id: 'legend',
-                name: 'Legend',
-                accent: '#ffeb3b',
-                glow: 'rgba(255,235,59,0.7)',
-                icon: '⚜️',
-                price: '500 ₽',
-                features: ['/kit legend', 'Жёлтый префикс [Legend]', '25 домов']
-            },
-            {
-                id: 'ultra',
-                name: 'Ultra',
-                accent: '#f44336',
-                glow: 'rgba(244,67,54,0.6)',
-                icon: '🔥',
-                price: '630 ₽',
-                features: ['/kit ultra', 'Красный префикс [Ultra]', '30 домов', 'Доступ к /fly и /heal', 'Приоритетный вход']
-            },
-            {
-                id: 'mythic',
-                name: 'Mythic',
-                accent: '#9c27b0',
-                glow: 'rgba(156,39,176,0.6)',
-                icon: '🌀',
-                price: '750 ₽',
-                features: ['/kit mythic', 'Фиолетовый префикс [Mythic]', '35 домов', 'Доступ ко всем warps']
-            },
-            {
-                id: 'god',
-                name: '👑 God',
-                accent: '#ffd54f',
-                glow: 'rgba(255,213,79,0.7)',
-                icon: '👑',
-                price: '1 000 ₽',
-                features: ['/kit god', 'Светло-жёлтый префикс [God]', '50 домов', 'Уникальный скин']
-            }
+            { id: 'vip', name: 'VIP', accent: '#4caf50', glow: 'rgba(76,175,80,0.6)', icon: '💎', price: '100 ₽', features: ['Доступ к /kit vip', 'Зелёный префикс [VIP]', '5 домов', 'Цветной ник'], url: 'https://troncraft.easydonate.ru/' },
+            { id: 'vip+', name: 'VIP+', accent: '#2e7d32', glow: 'rgba(46,125,50,0.6)', icon: '🔷', price: '200 ₽', features: ['/kit vip+', 'Тёмно-зелёный префикс [VIP+]', '10 домов', 'Улучшенный набор'], url: 'https://troncraft.easydonate.ru/' },
+            { id: 'premium', name: 'Premium', accent: '#03a9f4', glow: 'rgba(3,169,244,0.6)', icon: '💠', price: '300 ₽', features: ['/kit premium', 'Голубой префикс [Premium]', '15 домов', '/repair all раз в 10 минут'], url: 'https://troncraft.easydonate.ru/' },
+            { id: 'deluxe', name: 'Deluxe', accent: '#6a1b9a', glow: 'rgba(106,27,154,0.6)', icon: '🔮', price: '400 ₽', features: ['/kit deluxe', 'Фиолетовый префикс [Deluxe]', '20 домов', '/heal раз в 5 минут'], url: 'https://troncraft.easydonate.ru/' },
+            { id: 'legend', name: 'Legend', accent: '#ffeb3b', glow: 'rgba(255,235,59,0.7)', icon: '⚜️', price: '500 ₽', features: ['/kit legend', 'Жёлтый префикс [Legend]', '25 домов'], url: 'https://troncraft.easydonate.ru/' },
+            { id: 'ultra', name: 'Ultra', accent: '#f44336', glow: 'rgba(244,67,54,0.6)', icon: '🔥', price: '630 ₽', features: ['/kit ultra', 'Красный префикс [Ultra]', '30 домов', 'Доступ к /fly и /heal', 'Приоритетный вход'], url: 'https://troncraft.easydonate.ru/' },
+            { id: 'mythic', name: 'Mythic', accent: '#9c27b0', glow: 'rgba(156,39,176,0.6)', icon: '🌀', price: '750 ₽', features: ['/kit mythic', 'Фиолетовый префикс [Mythic]', '35 домов', 'Доступ ко всем warps'], url: 'https://troncraft.easydonate.ru/' },
+            { id: 'god', name: '👑 God', accent: '#ffd54f', glow: 'rgba(255,213,79,0.7)', icon: '👑', price: '1 000 ₽', features: ['/kit god', 'Светло-жёлтый префикс [God]', '50 домов', 'Уникальный скин'], url: 'https://troncraft.easydonate.ru/' }
         ];
 
-        const container = document.getElementById('donateCards');
-        if (container) {
+        const donateContainer = document.getElementById('donateCards');
+        if (donateContainer) {
             donateData.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'card';
@@ -966,30 +1385,58 @@
                     <ul class="card-features">
                         ${item.features.map(f => `<li>${f}</li>`).join('')}
                     </ul>
-                    <a href="https://easydonate.ru" target="_blank" rel="noopener noreferrer" class="btn-buy">🛒 Купить</a>
+                    <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="btn-buy">🛒 Купить</a>
                 `;
-                container.appendChild(card);
+                donateContainer.appendChild(card);
             });
         }
 
-        // ============ КОПИРОВАНИЕ IP ============
-        const serverIP = 'free.cloudblaze.org:20513';
+        // ============ ДАННЫЕ КЕЙСОВ ============
+        const casesData = [
+            { id: 'case1', name: '1 ключ', accent: '#ff9800', glow: 'rgba(255,152,0,0.6)', icon: '🔑', price: '59 ₽', features: ['Обычный кейс', 'Шанс на редкий лут'], url: 'https://troncraft.easydonate.ru/' },
+            { id: 'case5', name: '5 ключей', accent: '#ff9800', glow: 'rgba(255,152,0,0.7)', icon: '🔑🔑', price: '249 ₽', features: ['5 обычных кейсов', 'Выгоднее на 16%'], url: 'https://troncraft.easydonate.ru/' },
+            { id: 'case10', name: '10 ключей', accent: '#f44336', glow: 'rgba(244,67,54,0.7)', icon: '🗝️', price: '449 ₽', features: ['10 кейсов', 'Экономия 24%', '+ бонусный ключ'], url: 'https://troncraft.easydonate.ru/' },
+            { id: 'case100', name: '100 ключей', accent: '#e91e63', glow: 'rgba(233,30,99,0.8)', icon: '💎', price: '2 990 ₽', features: ['100 кейсов', 'Максимальная выгода', 'Гарантированный редкий предмет'], url: 'https://troncraft.easydonate.ru/' }
+        ];
 
-        function copyIP() {
+        const casesContainer = document.getElementById('casesCards');
+        if (casesContainer) {
+            casesData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.setProperty('--card-accent', item.accent);
+                card.style.setProperty('--card-accent-glow', item.glow);
+                card.innerHTML = `
+                    <span class="card-icon">${item.icon}</span>
+                    <h3 class="card-title">${item.name}</h3>
+                    <div class="card-price">${item.price}</div>
+                    <ul class="card-features">
+                        ${item.features.map(f => `<li>${f}</li>`).join('')}
+                    </ul>
+                    <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="btn-buy">🛒 Купить</a>
+                `;
+                casesContainer.appendChild(card);
+            });
+        }
+
+        // ============ КОПИРОВАНИЕ НОВОГО IP ============
+        const NEW_SERVER_IP = 'd1.proxify.cloud:25034';
+
+        function copyNewIP() {
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(serverIP).then(() => {
-                    showToast('✅', 'IP скопирован!', 'success');
+                navigator.clipboard.writeText(NEW_SERVER_IP).then(() => {
+                    showToast('✅', 'IP успешно скопирован!', 'success');
                 }).catch(() => {
-                    fallbackCopyIP();
+                    fallbackCopyNewIP();
                 });
             } else {
-                fallbackCopyIP();
+                fallbackCopyNewIP();
             }
         }
 
-        function fallbackCopyIP() {
+        function fallbackCopyNewIP() {
             const textArea = document.createElement('textarea');
-            textArea.value = serverIP;
+            textArea.value = NEW_SERVER_IP;
             textArea.style.position = 'fixed';
             textArea.style.left = '-9999px';
             textArea.style.top = '-9999px';
@@ -998,9 +1445,9 @@
             textArea.select();
             try {
                 document.execCommand('copy');
-                showToast('✅', 'IP скопирован!', 'success');
+                showToast('✅', 'IP успешно скопирован!', 'success');
             } catch (err) {
-                showToast('❌', 'Не удалось скопировать IP', '');
+                showToast('❌', 'Не удалось скопировать IP', 'error');
             }
             document.body.removeChild(textArea);
         }
@@ -1018,6 +1465,50 @@
                 }
             }, 2100);
         }
+
+        // ============ МОДАЛЬНОЕ ОКНО ДОНАТА ============
+        const donateModalOverlay = document.getElementById('donateModalOverlay');
+        const donateModalClose = document.getElementById('donateModalClose');
+        const donateNickname = document.getElementById('donateNickname');
+        const donateProceedBtn = document.getElementById('donateProceedBtn');
+        let currentDonateUrl = '';
+
+        document.addEventListener('click', function(e) {
+            const buyBtn = e.target.closest('.btn-buy');
+            if (buyBtn) {
+                e.preventDefault();
+                currentDonateUrl = buyBtn.getAttribute('href');
+                donateNickname.value = '';
+                donateModalOverlay.classList.add('active');
+            }
+        });
+
+        function closeDonateModal() {
+            donateModalOverlay.classList.remove('active');
+        }
+        donateModalClose.addEventListener('click', closeDonateModal);
+        donateModalOverlay.addEventListener('click', function(e) {
+            if (e.target === donateModalOverlay) {
+                closeDonateModal();
+            }
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && donateModalOverlay.classList.contains('active')) {
+                closeDonateModal();
+            }
+        });
+
+        donateProceedBtn.addEventListener('click', function() {
+            const nickname = donateNickname.value.trim();
+            if (nickname === '') {
+                showToast('⚠️', 'Введите никнейм', 'error');
+                return;
+            }
+            const separator = currentDonateUrl.includes('?') ? '&' : '?';
+            const finalUrl = currentDonateUrl + separator + 'player=' + encodeURIComponent(nickname);
+            closeDonateModal();
+            window.open(finalUrl, '_blank');
+        });
 
         // ============ БУРГЕР-МЕНЮ ============
         const burgerBtn = document.getElementById('burgerBtn');
@@ -1045,18 +1536,16 @@
         });
 
         mobileNavClose.addEventListener('click', closeMobileNav);
-
         mobileNav.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', closeMobileNav);
         });
-
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
                 closeMobileNav();
             }
         });
 
-        // ============ ЭФФЕКТ ТЕНИ ДЛЯ ШАПКИ ПРИ СКРОЛЛЕ ============
+        // ============ ШАПКА СКРОЛЛ-ЭФФЕКТ ============
         const header = document.getElementById('header');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 30) {
@@ -1079,9 +1568,125 @@
             });
         });
 
+        // ============ НЕОНОВЫЙ КУРСОР ============
+        const cursor = document.getElementById('neonCursor');
+        if (cursor) {
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
+            let currentX = mouseX;
+            let currentY = mouseY;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function animateCursor() {
+                currentX += (mouseX - currentX) * 0.15;
+                currentY += (mouseY - currentY) * 0.15;
+                cursor.style.left = currentX + 'px';
+                cursor.style.top = currentY + 'px';
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+
+            document.addEventListener('mousedown', () => {
+                cursor.classList.add('active');
+            });
+            document.addEventListener('mouseup', () => {
+                cursor.classList.remove('active');
+            });
+        }
+
+        // ============ ТАЙМЕР ОБРАТНОГО ОТСЧЁТА ============
+        function startCountdown(targetDate) {
+            function updateTimer() {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                if (distance < 0) {
+                    document.getElementById('timerDays').textContent = '00';
+                    document.getElementById('timerHours').textContent = '00';
+                    document.getElementById('timerMinutes').textContent = '00';
+                    document.getElementById('timerSeconds').textContent = '00';
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('timerDays').textContent = String(days).padStart(2, '0');
+                document.getElementById('timerHours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('timerMinutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('timerSeconds').textContent = String(seconds).padStart(2, '0');
+            }
+
+            updateTimer();
+            setInterval(updateTimer, 1000);
+        }
+
+        const nextSeason = new Date();
+        nextSeason.setDate(nextSeason.getDate() + 7);
+        startCountdown(nextSeason);
+
+        // ============ ПАРАЛЛАКС HERO ============
+        const hero = document.querySelector('.hero');
+        const bgLayer = document.getElementById('heroBgLayer');
+        const heroContent = document.getElementById('heroContent');
+
+        if (hero && bgLayer && heroContent) {
+            hero.addEventListener('mousemove', (e) => {
+                const rect = hero.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const moveX = (x - centerX) / centerX * 8;
+                const moveY = (y - centerY) / centerY * 8;
+
+                bgLayer.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                heroContent.style.transform = `translate(${moveX * -0.5}px, ${moveY * -0.5}px)`;
+            });
+
+            hero.addEventListener('mouseleave', () => {
+                bgLayer.style.transform = 'translate(0, 0)';
+                heroContent.style.transform = 'translate(0, 0)';
+            });
+        }
+
+        // ============ ЭФФЕКТ ПЕЧАТНОЙ МАШИНКИ ДЛЯ ПОДЗАГОЛОВКА ============
+        const subtitleEl = document.getElementById('heroSubtitle');
+        const fullText = 'Уникальные мистические аирдропы, честное ПВП без правил, кастомные талисманы и булавы ждут тебя!';
+        let charIndex = 0;
+        function typeWriter() {
+            if (subtitleEl && charIndex < fullText.length) {
+                subtitleEl.textContent += fullText.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 30);
+            }
+        }
+        setTimeout(typeWriter, 400);
+
+        // ============ КНОПКА НАВЕРХ ============
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 600) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
         console.log('%c💀 TRONCRAFT %cLanding Page готов!',
             'color: #ff3333; font-size: 1.4rem; font-weight: bold;',
-            'color: #ffcc00; font-size: 1rem;');
+            'color: #ffffff; font-size: 1rem;');
     </script>
 </body>
 </html>
