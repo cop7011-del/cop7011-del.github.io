@@ -615,6 +615,60 @@
             .modal-title { font-size: 1.4rem; }
             .donate-modal { padding: 28px 16px; }
         }
+
+        /* ===== ОПТИМИЗАЦИЯ ДЛЯ МОБИЛЬНЫХ (убираем лаги) ===== */
+        @media (max-width: 768px) {
+            /* Убираем частицы */
+            .bg-particles { display: none; }
+
+            /* Ослабляем орбы */
+            .bg-orbs .orb {
+                filter: blur(40px) !important;
+                opacity: 0.10 !important;
+                animation-duration: 30s !important;
+            }
+            .bg-orbs .orb:nth-child(1),
+            .bg-orbs .orb:nth-child(2),
+            .bg-orbs .orb:nth-child(3) {
+                width: 200px !important;
+                height: 200px !important;
+            }
+
+            /* Убираем blur-эффекты со стеклянных блоков */
+            .glass,
+            .glass-strong,
+            .product-card,
+            .case-widget,
+            .donate-modal {
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                background: rgba(18, 18, 18, 0.92) !important;
+            }
+
+            /* Отключаем лишние тени и свечения */
+            .neon-border-red,
+            .neon-border-white {
+                box-shadow: none !important;
+            }
+            .btn-red, .btn-white, .btn-primary-red {
+                box-shadow: none !important;
+            }
+            .product-card:hover {
+                transform: none !important;
+                box-shadow: none !important;
+            }
+            .timer-item {
+                box-shadow: none !important;
+            }
+
+            /* Уменьшаем количество анимаций */
+            .online-dot {
+                animation-duration: 2.5s !important;
+            }
+            .neon-cursor {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -811,12 +865,14 @@
         });
 
         // --------------------------------------------------------------
-        // 2. ФОНОВЫЕ ЧАСТИЦЫ (красные/белые)
+        // 2. ФОНОВЫЕ ЧАСТИЦЫ (красные/белые) - оптимизировано для мобильных
         // --------------------------------------------------------------
         (function createParticles() {
             const container = document.getElementById('particles');
+            // Определяем количество частиц в зависимости от ширины экрана
+            const isMobile = window.innerWidth < 768;
+            const count = isMobile ? 10 : 35;
             const colors = ['#ff3333', '#ffffff', '#ff6666', '#ff9999', '#cc3333'];
-            const count = 35;
             for (let i = 0; i < count; i++) {
                 const p = document.createElement('div');
                 p.classList.add('particle');
@@ -1126,7 +1182,7 @@
             }, 100);
         });
 
-        console.log('%c⚡ TRONCRAFT %cНовые цены установлены! Адаптивность улучшена!',
+        console.log('%c⚡ TRONCRAFT %cОптимизировано для мобильных!',
             'color: #ff3333; font-size: 1.4rem; font-weight: bold;',
             'color: #ffffff; font-size: 1rem;');
     </script>
