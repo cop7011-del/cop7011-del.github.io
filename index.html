@@ -618,10 +618,7 @@
 
         /* ===== ОПТИМИЗАЦИЯ ДЛЯ МОБИЛЬНЫХ (убираем лаги) ===== */
         @media (max-width: 768px) {
-            /* Убираем частицы */
             .bg-particles { display: none; }
-
-            /* Ослабляем орбы */
             .bg-orbs .orb {
                 filter: blur(40px) !important;
                 opacity: 0.10 !important;
@@ -633,8 +630,6 @@
                 width: 200px !important;
                 height: 200px !important;
             }
-
-            /* Убираем blur-эффекты со стеклянных блоков */
             .glass,
             .glass-strong,
             .product-card,
@@ -644,8 +639,6 @@
                 -webkit-backdrop-filter: none !important;
                 background: rgba(18, 18, 18, 0.92) !important;
             }
-
-            /* Отключаем лишние тени и свечения */
             .neon-border-red,
             .neon-border-white {
                 box-shadow: none !important;
@@ -660,14 +653,84 @@
             .timer-item {
                 box-shadow: none !important;
             }
-
-            /* Уменьшаем количество анимаций */
             .online-dot {
                 animation-duration: 2.5s !important;
             }
             .neon-cursor {
                 display: none !important;
             }
+        }
+
+        /* Дополнительный стиль для таблицы наказаний */
+        .punishment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.9rem;
+        }
+        .punishment-table th {
+            background: rgba(255,51,51,0.2);
+            color: #ffb3b3;
+            padding: 10px 8px;
+            border: 1px solid rgba(255,51,51,0.2);
+            text-align: left;
+        }
+        .punishment-table td {
+            padding: 8px 10px;
+            border: 1px solid rgba(255,255,255,0.06);
+            color: #ddd;
+        }
+        .punishment-table tr:nth-child(even) {
+            background: rgba(255,255,255,0.02);
+        }
+        .punishment-table .mute { color: #ffaa33; }
+        .punishment-table .kick { color: #ff8833; }
+        .punishment-table .ban { color: #ff3333; }
+        .punishment-table .warning { color: #ffcc33; }
+        .rules-section {
+            margin-bottom: 24px;
+        }
+        .rules-section h4 {
+            color: #fff;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .rules-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 6px 0 10px 0;
+        }
+        .rules-section ul li {
+            padding: 4px 0 4px 24px;
+            position: relative;
+            color: #ccc;
+            line-height: 1.6;
+        }
+        .rules-section ul li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--red);
+            font-weight: bold;
+        }
+        .rules-note {
+            margin-top: 20px;
+            padding: 16px;
+            border: 1px dashed rgba(255,51,51,0.3);
+            border-radius: 12px;
+            background: rgba(255,51,51,0.05);
+            color: #f0f0f0;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+        @media (max-width: 600px) {
+            .punishment-table { font-size: 0.75rem; }
+            .punishment-table th, .punishment-table td { padding: 6px 4px; }
+            .rules-section h4 { font-size: 1rem; }
         }
     </style>
 </head>
@@ -800,21 +863,125 @@
             </div>
         </section>
 
-        <!-- ===== СЕКЦИЯ ПРАВИЛ ===== -->
+        <!-- ===== СЕКЦИЯ ПРАВИЛ (ОБНОВЛЕННАЯ) ===== -->
         <section id="rules" class="mt-16 fade-up fade-up-d5">
             <div class="glass-strong rounded-3xl p-6 sm:p-10 neon-border-red">
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-white text-center mb-6">Правила сервера</h2>
-                <div style="color: #ccc; line-height: 1.8; max-width: 800px; margin: 0 auto; padding: 0 8px;">
-                    <p style="margin-bottom: 12px; font-weight: 700; color: #fff; font-size: 1.1rem;">👋 Добро пожаловать на TronCraft!</p>
-                    <p style="margin-bottom: 16px;">Мы — уникальный и технологичный гриферский проект на версии 1.21.11, созданный игроками для игроков. Если ты ищешь место с честным ПВП, крутой атмосферой и безграничными возможностями для разрушения и созидания — ты попал по адресу!</p>
-                    <p style="margin-top: 20px; font-weight: 700; color: #fff;">🔥 Почему тебе стоит играть именно на TronCraft:</p>
-                    <p style="margin: 10px 0 6px;"><strong>⚔️ Бескомпромиссный гриф и ПВП:</strong> Сражайся, взрывай базы и ищи чужие тайники. Наш сервер отлично оптимизирован на ядре Paper для максимально плавной игры.</p>
-                    <p style="margin: 10px 0 6px;"><strong>🖥️ Важная деталь:</strong> Проект работает на личном ПК владельца (Xeon E5 2690 v2 / 16 GB RAM / GTX 1070). Мы постоянно работаем над оптимизацией, но если при высоком онлайне возникнут небольшие просадки — мы сделаем всё, чтобы оперативно их исправить!</p>
-                    <p style="margin: 10px 0 6px;"><strong>🎁 Кастомные предметы и плагины:</strong> Забудь про скучное выживание. У нас установлены уникальные плагины на гриферские гаджеты и редкие предметы (по типу кастомных тотемов и шаров), которые перевернут твое представление о гриф-режиме!</p>
-                    <p style="margin: 10px 0 6px;"><strong>💰 Справедливая экономика и Донат:</strong> Мы против серверов, где донатеры могут всё. На TronCraft у каждого игрока есть шанс стать топ-1. Донат лишь помогает развиваться быстрее, но победа всегда зависит от твоего скилла!</p>
-                    <p style="margin: 10px 0 6px;"><strong>🛡️ Кланы:</strong> Создай свою группировку, пригласи друзей со всего мира и объяви войну другим кланам. Постройте самую защищенную базу на сервере, которую никто не сможет зарейдить.</p>
-                    <p style="margin: 10px 0 6px;"><strong>🎉 Постоянные ивенты:</strong> Администрация сервера всегда в игре. Мы регулярно проводим раздачи, ПВП-турниры и ивенты по поиску мистических сундуков с ценным лутом.</p>
-                    <p style="margin-top: 20px; font-weight: 600; color: #fff;">Заходи на TronCraft, зови друзей со всего мира, строй свою неприступную крепость и докажи всем, кто здесь главный грифер проекта! Прокачивайся, торгуй, побеждай и впиши свой ник в историю сервера!</p>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-white text-center mb-6">📜 Правила сервера</h2>
+                <div style="color: #ccc; line-height: 1.7; max-width: 900px; margin: 0 auto;">
+
+                    <!-- Вступление -->
+                    <div class="rules-section">
+                        <p style="font-size: 1.05rem; color: #f0f0f0;">
+                            <strong>👋 Добро пожаловать на TronCraft!</strong> Мы — уникальный гриферский проект на версии 1.21.11.
+                            Чтобы игра приносила удовольствие всем, просим соблюдать простые правила.
+                        </p>
+                    </div>
+
+                    <!-- Общие правила -->
+                    <div class="rules-section">
+                        <h4>⚖️ Общие правила</h4>
+                        <ul>
+                            <li>Запрещено использовать читы, баги и любые сторонние программы, дающие преимущество.</li>
+                            <li>Запрещён гриферский софт, который ломает экономику сервера или мешает другим игрокам.</li>
+                            <li>Уважайте других игроков — оскорбления, травля и дискриминация запрещены.</li>
+                            <li>Не спамьте в чате, не флудите и не используйте капс без причины.</li>
+                            <li>Запрещена реклама других серверов и проектов.</li>
+                            <li>Все спорные ситуации решаются администрацией — не устраивайте самосуд.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Правила гриферства -->
+                    <div class="rules-section">
+                        <h4>🏴‍☠️ Правила гриферства (PvP и разрушения)</h4>
+                        <ul>
+                            <li>Гриферство разрешено, но в разумных пределах — не уничтожайте спавн-точки и общественные постройки.</li>
+                            <li>Запрещено использовать баги для прохода через защиту (например, через стены или порталы).</li>
+                            <li>PvP разрешён везде, кроме зон, защищённых плагинами (например, /warp или спавн).</li>
+                            <li>Не крафтите и не используйте предметы, которые могут крашить сервер.</li>
+                            <li>Будьте честны в бою — не используйте нечестные приёмы (например, отключение интернета).</li>
+                        </ul>
+                    </div>
+
+                    <!-- Правила чата -->
+                    <div class="rules-section">
+                        <h4>💬 Правила чата</h4>
+                        <ul>
+                            <li>Общайтесь на русском или английском языке — остальные языки только в личных сообщениях.</li>
+                            <li>Не обсуждайте политику, религию и другие острые темы.</li>
+                            <li>Запрещено выдавать себя за администрацию или других игроков.</li>
+                            <li>Не просите админов дать вам привилегии, предметы или статусы — они выдаются только по заслугам.</li>
+                            <li>Соблюдайте адекватный тон — без агрессии и токсичности.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Таблица наказаний -->
+                    <div style="margin: 28px 0 20px 0;">
+                        <h4 style="color: #fff; font-size: 1.2rem; font-weight: 700; text-align: center; margin-bottom: 12px;">⚡ Система наказаний</h4>
+                        <table class="punishment-table">
+                            <thead>
+                                <tr>
+                                    <th>Нарушение</th>
+                                    <th>1-е нарушение</th>
+                                    <th>2-е нарушение</th>
+                                    <th>3-е и более</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Мат / оскорбления</td>
+                                    <td><span class="warning">Предупреждение</span></td>
+                                    <td><span class="mute">Мут 30 мин</span></td>
+                                    <td><span class="ban">Бан 1 день</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Спам / флуд</td>
+                                    <td><span class="warning">Предупреждение</span></td>
+                                    <td><span class="mute">Мут 15 мин</span></td>
+                                    <td><span class="ban">Мут 1 час</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Использование читов</td>
+                                    <td><span class="ban">Бан навсегда</span></td>
+                                    <td>—</td>
+                                    <td>—</td>
+                                </tr>
+                                <tr>
+                                    <td>Гриферство на спавне</td>
+                                    <td><span class="warning">Предупреждение</span></td>
+                                    <td><span class="kick">Кик</span></td>
+                                    <td><span class="ban">Бан 3 дня</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Неадекватное поведение / токсичность</td>
+                                    <td><span class="warning">Предупреждение</span></td>
+                                    <td><span class="mute">Мут 1 час</span></td>
+                                    <td><span class="ban">Бан 7 дней</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Реклама / ссылки</td>
+                                    <td><span class="warning">Предупреждение</span></td>
+                                    <td><span class="mute">Мут 1 день</span></td>
+                                    <td><span class="ban">Бан навсегда</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Использование багов</td>
+                                    <td><span class="warning">Предупреждение</span></td>
+                                    <td><span class="ban">Бан 3 дня</span></td>
+                                    <td><span class="ban">Бан навсегда</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Примечание -->
+                    <div class="rules-note">
+                        <span style="font-weight: 700; color: #ff6666;">❗ Администрация оставляет за собой право</span> изменять меру наказания в зависимости от тяжести нарушения и обстоятельств. По всем вопросам обращайтесь к администраторам в игре или в нашем Discord-канале.
+                    </div>
+
+                    <!-- Финальная фраза -->
+                    <p style="margin-top: 24px; font-weight: 600; color: #fff; text-align: center;">
+                        🚀 Играйте честно, уважайте друг друга — и да прибудет с вами удача!
+                    </p>
                 </div>
             </div>
         </section>
@@ -865,11 +1032,10 @@
         });
 
         // --------------------------------------------------------------
-        // 2. ФОНОВЫЕ ЧАСТИЦЫ (красные/белые) - оптимизировано для мобильных
+        // 2. ФОНОВЫЕ ЧАСТИЦЫ (оптимизировано для мобильных)
         // --------------------------------------------------------------
         (function createParticles() {
             const container = document.getElementById('particles');
-            // Определяем количество частиц в зависимости от ширины экрана
             const isMobile = window.innerWidth < 768;
             const count = isMobile ? 10 : 35;
             const colors = ['#ff3333', '#ffffff', '#ff6666', '#ff9999', '#cc3333'];
@@ -1014,7 +1180,7 @@
         setTimeout(typeWriter, 400);
 
         // --------------------------------------------------------------
-        // 9. ГЕНЕРАЦИЯ КАРТОЧЕК ПРИВИЛЕГИЙ (НОВЫЕ ЦЕНЫ)
+        // 9. ГЕНЕРАЦИЯ КАРТОЧЕК ПРИВИЛЕГИЙ
         // --------------------------------------------------------------
         const privilegeData = [
             { name: 'VIP', icon: '💎', price: '130 ₽', features: ['Доступ к /kit vip', 'Зелёный префикс [VIP]', '5 домов', 'Цветной ник'], color: 'red' },
@@ -1047,7 +1213,7 @@
         });
 
         // --------------------------------------------------------------
-        // 10. ГЕНЕРАЦИЯ КАРТОЧЕК КЕЙСОВ (тоже новые цены)
+        // 10. ГЕНЕРАЦИЯ КАРТОЧЕК КЕЙСОВ
         // --------------------------------------------------------------
         const casesData = [
             { name: '1 ключ', icon: '🔑', price: '65 ₽', features: ['Обычный кейс', 'Шанс на редкий лут'] },
@@ -1182,7 +1348,7 @@
             }, 100);
         });
 
-        console.log('%c⚡ TRONCRAFT %cОптимизировано для мобильных!',
+        console.log('%c⚡ TRONCRAFT %cПравила обновлены + система наказаний!',
             'color: #ff3333; font-size: 1.4rem; font-weight: bold;',
             'color: #ffffff; font-size: 1rem;');
     </script>
