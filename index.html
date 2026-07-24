@@ -33,13 +33,12 @@
             overflow-x: hidden;
             cursor: none;
         }
-        /* Отключаем кастомный курсор на touch-устройствах */
         @media (pointer: coarse) {
             body { cursor: auto; }
             .neon-cursor { display: none !important; }
         }
 
-        /* ===== ФОНОВЫЕ ОРБЫ (красные/белые) ===== */
+        /* ===== ФОНОВЫЕ ОРБЫ ===== */
         .bg-orbs {
             position: fixed;
             inset: 0;
@@ -82,7 +81,7 @@
             100% { transform: translate(30px,-10px) scale(1.05); }
         }
 
-        /* ===== СТЕКЛО (glassmorphism) с красными границами ===== */
+        /* ===== СТЕКЛО ===== */
         .glass {
             background: rgba(255,255,255,0.04);
             backdrop-filter: blur(18px);
@@ -97,7 +96,7 @@
             border: 1px solid rgba(255,255,255,0.07);
         }
 
-        /* ===== НЕОНОВЫЕ ГРАНИЦЫ (красные) ===== */
+        /* ===== НЕОНОВЫЕ ГРАНИЦЫ ===== */
         .neon-border-red {
             border: 1px solid rgba(255,51,51,0.35);
             box-shadow: 0 0 20px rgba(255,51,51,0.15), inset 0 0 20px rgba(255,51,51,0.05);
@@ -107,7 +106,7 @@
             box-shadow: 0 0 20px rgba(255,255,255,0.10), inset 0 0 20px rgba(255,255,255,0.03);
         }
 
-        /* ===== КНОПКИ (красные/белые) ===== */
+        /* ===== КНОПКИ ===== */
         .btn-red {
             background: linear-gradient(135deg, rgba(255,51,51,0.15), rgba(255,51,51,0.04));
             border: 1px solid rgba(255,51,51,0.4);
@@ -231,7 +230,7 @@
         }
         .input-glow::placeholder { color: rgba(255,255,255,0.30); }
 
-        /* ===== ПРЕЛОАДЕР (красный/белый) ===== */
+        /* ===== ПРЕЛОАДЕР ===== */
         .preloader {
             position: fixed;
             inset: 0;
@@ -273,7 +272,7 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ===== ФОНОВЫЕ ЧАСТИЦЫ (красные/белые) ===== */
+        /* ===== ФОНОВЫЕ ЧАСТИЦЫ ===== */
         .bg-particles {
             position: fixed;
             top: 0; left: 0;
@@ -296,7 +295,7 @@
             100% { transform: translateY(-10vh) scale(1.3); opacity: 0; }
         }
 
-        /* ===== КАСТОМНЫЙ НЕОНОВЫЙ КУРСОР (красный) ===== */
+        /* ===== КАСТОМНЫЙ КУРСОР ===== */
         .neon-cursor {
             position: fixed;
             pointer-events: none;
@@ -319,7 +318,7 @@
             50% { transform: translate(-50%,-50%) scale(1.3); }
         }
 
-        /* ===== TOAST-УВЕДОМЛЕНИЯ ===== */
+        /* ===== TOAST ===== */
         .toast-container {
             position: fixed;
             top: 30px;
@@ -403,7 +402,7 @@
             text-transform: uppercase;
         }
 
-        /* ===== МОДАЛЬНОЕ ОКНО ДОНАТА ===== */
+        /* ===== МОДАЛЬНОЕ ОКНО ===== */
         .donate-modal-overlay {
             position: fixed;
             inset: 0;
@@ -537,7 +536,7 @@
             box-shadow: 0 0 30px rgba(255,255,255,0.7);
         }
 
-        /* ===== СОЦИАЛЬНЫЕ КНОПКИ (красные/белые) ===== */
+        /* ===== СОЦИАЛЬНЫЕ КНОПКИ ===== */
         .social-btn {
             display: inline-flex;
             align-items: center;
@@ -616,7 +615,7 @@
             .donate-modal { padding: 28px 16px; }
         }
 
-        /* ===== ОПТИМИЗАЦИЯ ДЛЯ МОБИЛЬНЫХ (убираем лаги) ===== */
+        /* ===== ОПТИМИЗАЦИЯ ДЛЯ МОБИЛЬНЫХ ===== */
         @media (max-width: 768px) {
             .bg-particles { display: none; }
             .bg-orbs .orb {
@@ -661,7 +660,7 @@
             }
         }
 
-        /* Дополнительный стиль для таблицы наказаний */
+        /* ===== ТАБЛИЦА НАКАЗАНИЙ ===== */
         .punishment-table {
             width: 100%;
             border-collapse: collapse;
@@ -761,11 +760,12 @@
     <!-- ===== ОСНОВНОЙ КОНТЕЙНЕР ===== -->
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
 
-        <!-- ===== ШАПКА ===== -->
+        <!-- ===== ШАПКА (ЛОГОТИП С ИКОНКОЙ ⚔) ===== -->
         <header class="glass rounded-2xl px-4 sm:px-8 py-4 flex items-center justify-between flex-wrap gap-4 fade-up">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-white font-extrabold text-xl shadow-lg shadow-red-500/30">
-                    T
+                <!-- 🔥 ЗДЕСЬ МЫ ЗАМЕНИЛИ БУКВУ T НА ⚔ -->
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-white text-xl shadow-lg shadow-red-500/30">
+                   🪓
                 </div>
                 <span class="text-xl sm:text-2xl font-extrabold tracking-tight bg-gradient-to-r from-red-400 to-white bg-clip-text text-transparent">
                     TRONCRAFT
@@ -863,13 +863,12 @@
             </div>
         </section>
 
-        <!-- ===== СЕКЦИЯ ПРАВИЛ (ОБНОВЛЕННАЯ) ===== -->
+        <!-- ===== СЕКЦИЯ ПРАВИЛ ===== -->
         <section id="rules" class="mt-16 fade-up fade-up-d5">
             <div class="glass-strong rounded-3xl p-6 sm:p-10 neon-border-red">
                 <h2 class="text-2xl sm:text-3xl font-extrabold text-white text-center mb-6">📜 Правила сервера</h2>
                 <div style="color: #ccc; line-height: 1.7; max-width: 900px; margin: 0 auto;">
 
-                    <!-- Вступление -->
                     <div class="rules-section">
                         <p style="font-size: 1.05rem; color: #f0f0f0;">
                             <strong>👋 Добро пожаловать на TronCraft!</strong> Мы — уникальный гриферский проект на версии 1.21.11.
@@ -877,7 +876,6 @@
                         </p>
                     </div>
 
-                    <!-- Общие правила -->
                     <div class="rules-section">
                         <h4>⚖️ Общие правила</h4>
                         <ul>
@@ -890,7 +888,6 @@
                         </ul>
                     </div>
 
-                    <!-- Правила гриферства -->
                     <div class="rules-section">
                         <h4>🏴‍☠️ Правила гриферства (PvP и разрушения)</h4>
                         <ul>
@@ -902,7 +899,6 @@
                         </ul>
                     </div>
 
-                    <!-- Правила чата -->
                     <div class="rules-section">
                         <h4>💬 Правила чата</h4>
                         <ul>
@@ -914,7 +910,7 @@
                         </ul>
                     </div>
 
-                    <!-- Таблица наказаний (ОБНОВЛЕНА) -->
+                    <!-- Таблица наказаний -->
                     <div style="margin: 28px 0 20px 0;">
                         <h4 style="color: #fff; font-size: 1.2rem; font-weight: 700; text-align: center; margin-bottom: 12px;">⚡ Система наказаний</h4>
                         <table class="punishment-table">
@@ -973,12 +969,10 @@
                         </table>
                     </div>
 
-                    <!-- Примечание -->
                     <div class="rules-note">
                         <span style="font-weight: 700; color: #ff6666;">❗ Администрация оставляет за собой право</span> изменять меру наказания в зависимости от тяжести нарушения и обстоятельств. По всем вопросам обращайтесь к администраторам в игре или в нашем Discord-канале.
                     </div>
 
-                    <!-- Финальная фраза -->
                     <p style="margin-top: 24px; font-weight: 600; color: #fff; text-align: center;">
                         🚀 Играйте честно, уважайте друг друга — и да прибудет с вами удача!
                     </p>
@@ -1319,7 +1313,7 @@
         });
 
         // --------------------------------------------------------------
-        // 15. ПЛАВНАЯ АНИМАЦИЯ ПРИ ПОЯВЛЕНИИ (Intersection Observer)
+        // 15. ПЛАВНАЯ АНИМАЦИЯ ПРИ ПОЯВЛЕНИИ
         // --------------------------------------------------------------
         document.addEventListener('DOMContentLoaded', () => {
             const observer = new IntersectionObserver((entries) => {
@@ -1348,7 +1342,7 @@
             }, 100);
         });
 
-        console.log('%c⚡ TRONCRAFT %cНаказания за читы обновлены (3/13/30 дней)!',
+        console.log('%c⚡ TRONCRAFT %cЛоготип обновлён — теперь с иконкой ⚔!',
             'color: #ff3333; font-size: 1.4rem; font-weight: bold;',
             'color: #ffffff; font-size: 1rem;');
     </script>
