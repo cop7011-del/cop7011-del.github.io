@@ -261,6 +261,16 @@
         .recent-purchase .dot { width: 6px; height: 6px; border-radius: 50%; background: #4caf50; flex-shrink: 0; }
         .recent-purchase b { color: #fff; font-weight: 600; }
         .recent-purchase .item { color: #ff8080; font-weight: 700; }
+
+        /* ===== ФИКС ЛОГОТИПА НА ТЕЛЕФОНАХ ===== */
+        @media (max-width: 768px) {
+            .preloader-logo {
+                font-size: 2.2rem !important; /* Уменьшаем размер */
+                text-align: center;
+                padding: 0 10px;
+                white-space: nowrap;
+            }
+        }
     </style>
 </head>
 <body>
@@ -823,7 +833,6 @@
         const pmc = document.getElementById('playersModalClose');
         const playersList = document.getElementById('playersList');
 
-        // Фейковый список игроков для онлайна. Твой ник добавлен первым.
         const FAKE_PLAYERS = [
             'Misha_Sobolevski', 'TronMaster', 'xXx_Destroyer_xXx', 'GrieferKing', 'DiamondMiner',
             'NoobSlayer99', 'CreeperBoss', 'ShadowNinja', 'RedstoneKing',
@@ -836,14 +845,12 @@
             const count = 8 + Math.floor(Math.random() * 5);
             const shuffled = [...FAKE_PLAYERS].sort(() => Math.random() - 0.5).slice(0, count);
             
-            // Проверяем, чтобы Misha_Sobolevski всегда был в списке
             if (!shuffled.includes('Misha_Sobolevski')) {
                 shuffled[0] = 'Misha_Sobolevski';
             }
 
             playersList.innerHTML = shuffled.map(nick => `
                 <div class="player-row">
-                    <!-- Заменили ссылку на mc-heads, чтобы твой скин с Ely.by отображался корректно -->
                     <img src="https://mc-heads.net/avatar/${nick}/36" class="player-avatar" alt="${nick}" loading="lazy" onerror="this.src='https://mc-heads.net/avatar/Steve/36'" />
                     <div class="player-name">${nick}</div>
                 </div>
