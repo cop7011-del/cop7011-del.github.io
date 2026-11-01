@@ -257,8 +257,8 @@
         .player-avatar { width: 36px; height: 36px; border-radius: 8px; background: #333; image-rendering: pixelated; }
         .player-name { font-weight: 700; color: #fff; font-size: 0.95rem; }
         /* ===== RECENT PURCHASES ===== */
-        .recent-purchase { font-size: 0.8rem; color: #b0b0b0; display: flex; align-items: center; gap: 8px; padding: 4px 0; animation: fadeUp 0.5s ease forwards; }
-        .recent-purchase .dot { width: 6px; height: 6px; border-radius: 50%; background: #4caf50; flex-shrink: 0; }
+        .recent-purchase { font-size: 0.8rem; color: #b0b0b0; display: flex; align-items: flex-start; gap: 8px; padding: 4px 0; animation: fadeUp 0.5s ease forwards; }
+        .recent-purchase .dot { width: 6px; height: 6px; margin-top: 5px; border-radius: 50%; background: #4caf50; flex-shrink: 0; }
         .recent-purchase b { color: #fff; font-weight: 600; }
         .recent-purchase .item { color: #ff8080; font-weight: 700; }
 
@@ -363,7 +363,9 @@
                         <div id="recentPurchases" class="space-y-1"></div>
                     </div>
                 </div>
-                <div class="flex-shrink-0 w-full lg:w-auto">
+                
+                <!-- БОЛЬШОЙ КРУГ (СКРЫТ НА ТЕЛЕФОНАХ) -->
+                <div class="hidden lg:block flex-shrink-0 w-full lg:w-auto">
                     <div class="w-48 h-48 sm:w-60 sm:h-60 md:w-72 md:h-72 rounded-full bg-gradient-to-br from-red-500/20 via-white/10 to-transparent flex items-center justify-center border border-white/10 backdrop-blur-sm">
                         <span class="text-7xl sm:text-8xl md:text-9xl opacity-30">⚔</span>
                     </div>
