@@ -740,14 +740,14 @@
         // ============================================================
         const DONATE_BASE = 'https://troncraft.easydonate.ru/';
         const privilegeData = [
-            { name: 'VIP', icon: '💎', price: '130 ₽', features: ['Доступ к /kit vip', 'Зелёный префикс [VIP]', '5 домов', 'Цветной ник'], color: 'red', url: DONATE_BASE },
-            { name: 'VIP+', icon: '🔷', price: '245 ₽', features: ['/kit vip+', 'Тёмно-зелёный префикс [VIP+]', '10 домов', 'Улучшенный набор'], color: 'white', url: DONATE_BASE },
-            { name: 'Premium', icon: '💠', price: '360 ₽', features: ['/kit premium', 'Голубой префикс [Premium]', '15 домов', '/repair all раз в 10 минут'], color: 'red', url: DONATE_BASE },
-            { name: 'Deluxe', icon: '🔮', price: '470 ₽', features: ['/kit deluxe', 'Фиолетовый префикс [Deluxe]', '20 домов', '/heal раз в 5 минут'], color: 'white', url: DONATE_BASE },
-            { name: 'Legend', icon: '⚜️', price: '580 ₽', features: ['/kit legend', 'Жёлтый префикс [Legend]', '25 домов'], color: 'red', url: DONATE_BASE },
-            { name: 'Ultra', icon: '🔥', price: '690 ₽', features: ['/kit ultra', 'Красный префикс [Ultra]', '30 домов', 'Доступ к /fly и /heal', 'Приоритетный вход'], color: 'white', url: DONATE_BASE },
-            { name: 'Mythic', icon: '🌀', price: '820 ₽', features: ['/kit mythic', 'Фиолетовый префикс [Mythic]', '35 домов', 'Доступ ко всем warps'], color: 'red', url: DONATE_BASE },
-            { name: 'God', icon: '👑', price: '1 050 ₽', features: ['/kit god', 'Светло-жёлтый префикс [God]', '50 домов', 'Уникальный скин'], color: 'white', url: DONATE_BASE }
+            { name: 'VIP', icon: 'img/vip.png', price: '130 ₽', features: ['Доступ к /kit vip', 'Зелёный префикс [VIP]', '5 домов', 'Цветной ник'], color: 'red', url: DONATE_BASE },
+            { name: 'VIP+', icon: 'img/vip_plus.png', price: '245 ₽', features: ['/kit vip+', 'Тёмно-зелёный префикс [VIP+]', '10 домов', 'Улучшенный набор'], color: 'white', url: DONATE_BASE },
+            { name: 'Premium', icon: 'img/premium.png', price: '360 ₽', features: ['/kit premium', 'Голубой префикс [Premium]', '15 домов', '/repair all раз в 10 минут'], color: 'red', url: DONATE_BASE },
+            { name: 'Deluxe', icon: 'img/deluxe.png', price: '470 ₽', features: ['/kit deluxe', 'Фиолетовый префикс [Deluxe]', '20 домов', '/heal раз в 5 минут'], color: 'white', url: DONATE_BASE },
+            { name: 'Legend', icon: 'img/legend.png', price: '580 ₽', features: ['/kit legend', 'Жёлтый префикс [Legend]', '25 домов'], color: 'red', url: DONATE_BASE },
+            { name: 'Ultra', icon: 'img/ultra.png', price: '690 ₽', features: ['/kit ultra', 'Красный префикс [Ultra]', '30 домов', 'Доступ к /fly и /heal', 'Приоритетный вход'], color: 'white', url: DONATE_BASE },
+            { name: 'Mythic', icon: 'img/mythic.png', price: '820 ₽', features: ['/kit mythic', 'Фиолетовый префикс [Mythic]', '35 домов', 'Доступ ко всем warps'], color: 'red', url: DONATE_BASE },
+            { name: 'God', icon: 'img/god.png', price: '1 050 ₽', features: ['/kit god', 'Светло-жёлтый префикс [God]', '50 домов', 'Уникальный скин'], color: 'white', url: DONATE_BASE }
         ];
         const pgrid = document.getElementById('privilegeGrid');
         privilegeData.forEach((p, i) => {
@@ -755,11 +755,11 @@
             card.className = 'product-card rounded-2xl p-6 flex flex-col fade-up fade-up-d' + (4 + i % 4);
             card.innerHTML = `
                 <div class="glow-line"></div>
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="text-3xl">${p.icon}</span>
-                    <span class="text-xl font-bold text-white">${p.name}</span>
+                <div class="flex flex-col items-center mb-4">
+                    <img src="${p.icon}" alt="${p.name}" class="w-24 h-24 object-cover rounded-xl shadow-lg drop-shadow-[0_0_15px_rgba(255,51,51,0.3)] mb-3 border border-white/10" onerror="this.style.display='none'" />
+                    <span class="text-xl font-bold text-white text-center">${p.name}</span>
                 </div>
-                <div class="text-2xl font-extrabold ${p.color === 'red' ? 'text-red-400' : 'text-white'} mb-3">${p.price}</div>
+                <div class="text-2xl font-extrabold ${p.color === 'red' ? 'text-red-400' : 'text-white'} mb-3 text-center">${p.price}</div>
                 <ul class="space-y-2 text-sm text-gray-300 flex-1">
                     ${p.features.map(f => `<li class="flex items-center gap-2"><span class="${p.color === 'red' ? 'text-red-400' : 'text-white'}">✓</span> ${f}</li>`).join('')}
                 </ul>
@@ -783,11 +783,11 @@
             card.className = 'product-card rounded-2xl p-6 flex flex-col fade-up fade-up-d' + (4 + i);
             card.innerHTML = `
                 <div class="glow-line"></div>
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="text-3xl">${c.icon}</span>
+                <div class="flex items-center justify-center gap-3 mb-4">
+                    <span class="text-4xl">${c.icon}</span>
                     <span class="text-xl font-bold text-white">${c.name}</span>
                 </div>
-                <div class="text-2xl font-extrabold text-red-400 mb-3">${c.price}</div>
+                <div class="text-2xl font-extrabold text-red-400 mb-3 text-center">${c.price}</div>
                 <ul class="space-y-2 text-sm text-gray-300 flex-1">
                     ${c.features.map(f => `<li class="flex items-center gap-2"><span class="text-red-400">✓</span> ${f}</li>`).join('')}
                 </ul>
